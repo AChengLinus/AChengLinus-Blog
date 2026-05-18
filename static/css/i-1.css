@@ -257,6 +257,28 @@ header nav a.login-link:hover {
     color: #2f7ddb
 }
 
+header nav a.lang-btn {
+    display: inline-block;
+    color: #FFF;
+    padding: 0 .7em;
+    margin-left: .8em;
+    font-size: .85em;
+    font-weight: 700;
+    text-shadow: 0 2px 0 rgba(0,0,0,.2);
+    background: rgba(255,255,255,.15);
+    border-radius: .3em;
+    line-height: 40px;
+    -webkit-transition: background .3s ease, color .3s ease;
+    transition: background .3s ease, color .3s ease;
+    cursor: pointer;
+    pointer-events: auto
+}
+
+header nav a.lang-btn:hover {
+    background: rgba(255,255,255,.3);
+    color: #FFF
+}
+
 @-webkit-keyframes fadeinT {
     0% {
         opacity: 0;

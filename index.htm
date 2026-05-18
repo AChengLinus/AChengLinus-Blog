@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>AChengLinux - 个人博客</title>
+<title data-i18n="page_title">AChengLinus - 个人博客</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=1280">
 <link rel="stylesheet" href="static/css/i.css?20200424">
 <meta http-equiv="Cache-Control" content="no-siteapp">
-<meta name="apple-mobile-web-app-title" content="AChengLinux">
+<meta name="apple-mobile-web-app-title" content="AChengLinus">
 <meta name="google" value="notranslate">
 <style>
-/* ===== 布局调整：标题和导航在一行，搜索框换到下一行 ===== */
+/* ===== 布局调整：标题、搜索框、导航行 ===== */
 header .layout {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
 }
 
-/* ===== 导航链接修复：确保可点击 ===== */
+header h1 {
+  float: none;
+}
+
+/* ===== 导航链接修复：确保可点击并垂直居中 ===== */
 header nav {
   position: relative;
   z-index: 10000;
   pointer-events: auto;
   margin-left: auto;
+  float: none;
+  padding: 0 20px;
+  height: 80px;
+  display: flex;
+  align-items: center;
 }
 header nav a {
   pointer-events: auto;
@@ -33,8 +42,14 @@ header nav a {
   position: relative;
   z-index: 9999;
   pointer-events: auto;
-  width: 600px;
+  width: 540px;
+  flex-shrink: 1;
+  min-width: 360px;
   font-family: inherit;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
 }
 .search-baidu input,
 .search-baidu button {
@@ -46,6 +61,7 @@ header nav a {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
+  width: 100%;
 }
 .search-baidu input[type="text"] {
   flex: 1;
@@ -102,6 +118,34 @@ header nav a {
 .search-baidu .suggestions div:hover {
   background: #f0f0f0;
 }
+
+/* ===== 卡片等高校正（中英文文字长度不同） ===== */
+.step-3 > ul {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+.step-3 > ul > li {
+  display: flex;
+  flex-direction: column;
+}
+.step-3 > ul > li .button {
+  margin-top: auto;
+}
+
+/* ===== 图标背景图适配容器大小 ===== */
+.step-2 ul li .icon i {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.step-2 ul li.feature-3 .icon i {
+  background-image: url(static/img/icon/3.svg);
+  background-color: #000;
+  background-size: 75%;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+}
 </style>
 <div id="stage">
     <article class="step-1">
@@ -109,36 +153,37 @@ header nav a {
             <div id="test">
                 <header>
                     <div class="layout">
-                        <h1>AChengLinux</h1>
+                        <h1>AChengLinus</h1>
                         <!-- 搜索引擎区块：宽度适中，输入框和按钮完美横排 -->
                         <div class="search-baidu">
                           <form action="https://www.baidu.com/s" method="get" target="_blank">
-                            <input type="text" name="wd" placeholder="输入关键词..." required autocomplete="off">
+                            <input type="text" name="wd" placeholder="输入关键词..." data-i18n="search_ph" required autocomplete="off">
                             <button type="submit"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#666" stroke-width="2.5" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><line x1="15" y1="15" x2="21" y2="21"/></svg></button>
                           </form>
                         </div>
                         <nav>
-                            <a href="https://www.ug.link/acheng9616" class="login-link">我的服务器</a>
-                            <a href="about.html">公告</a>
+                            <a href="https://www.ug.link/acheng9616" class="login-link" data-i18n="nav_server">我的服务器</a>
+                            <a href="about.html" data-i18n="nav_announce">公告</a>
+                            <a href="javascript:;" class="lang-btn" id="langToggle" onclick="toggleLang()">EN</a>
                         </nav>
                     </div>
                 </header>
                 <h2><span class="line line-1">我系<span class="moji-1">ACheng</span>啊</span> 
                   <span class="line line-2">识得唔识得啊</span></h2><i class="bg"></i> <i class="hr"></i>
                 <div class="shell-box"><i class="shell-shadow"></i> <i class="shell"><span></span></i></div><a
-                    class="link-reg" href="https://wiki.acheng9616.com/">🗃️Wiki</a><i class="light"></i>
+                    class="link-reg" href="https://wiki.acheng9616.com/">📁Wiki</a><i class="light"></i>
             </div>
         </div>
     </article>
-    <span class="tip tip-1">向下滚动</span>
+    <span class="tip tip-1" data-i18n="scroll">向下滚动</span>
     <article class="step-2">
         <div class="content">
-            <h3 class="ui-h ui-h-1">在这些地方找到我</h3>
+            <h3 class="ui-h ui-h-1" data-i18n="find_me">在这些地方找到我</h3>
             <ul>
                 <a href="https://space.bilibili.com/448510885">
                     <li class="feature-1">
                        <div class="icon"><i></i><big>Bilibili</big></div>
-                       <p>AChengLinux</p>
+                       <p>AChengLinus</p>
                     </li>
                  </a>
                  <a href="https://www.youtube.com/channel/UCKIIr5xtwcb8HUGaSQeA9wA">
@@ -147,10 +192,10 @@ header nav a {
                        <p>ChengA</p>
                     </li>
                  </a>
-                 <a href="https://www.weibo.com/u/6056434188">
+                 <a href="https://github.com/LinuxCheng007">
                     <li class="feature-3">
-                       <div class="icon"><i></i><big>Weibo</big></div>
-                       <p>ChengLin0</p>
+                       <div class="icon"><i></i><big>GitHub</big></div>
+                       <p>AChengLinus</p>
                     </li>
                  </a>
                  <a href="https://kick.com/acheng9616/">
@@ -169,76 +214,200 @@ header nav a {
         </div><i class="after"></i>
     </article>
     <article class="step-3">
-        <h3 class="ui-h ui-h-2">看什么看，没东西啦</h3>
+        <h3 class="ui-h ui-h-2" data-i18n="nothing_here">看什么看，没东西啦</h3>
         <ul>
             <li>
                 <div class="head">
-                    <h4 id="price-1"><big>关于我</big> <small>我的来历</small></h4>
+                    <h4 id="price-1" data-i18n="card1_title"><big>关于我</big> <small>我的来历</small></h4>
                 </div>
                 <ul>
-                    <li><i>游戏</i> <b>各种类型游戏</b>
-                    <li><i>咖啡</i> <b>巴拿马产地</b>
-                    <li><i>篮球</i> <b>蔡徐坤？？？</b></li>
-                </ul><a class="button" href="about.html#/about">了解更多</a>
+                    <li><i data-i18n="card1_game">游戏</i> <b data-i18n="card1_game_val">各种类型游戏</b>
+                    <li><i data-i18n="card1_coffee">咖啡</i> <b data-i18n="card1_coffee_val">巴拿马产地</b>
+                    <li><i data-i18n="card1_basketball">篮球</i> <b data-i18n="card1_basketball_val">蔡徐坤？？？</b></li>
+                </ul><a class="button" href="about.html#/about" data-i18n="learn_more">了解更多</a>
             <li>
                 <div class="head">
-                    <h4 id="price-2"><big>公告</big> <small>一些声明</small></h4>
+                    <h4 id="price-2" data-i18n="card2_title"><big>公告</big> <small>一些声明</small></h4>
                 </div>
                 <ul>
-                    <li><i>重要</i> <b>事情</b>
-                    <li><i>日常</i> <b>吐槽</b>
-                    <li><i>情感</i> <b>事故</b></li>
-                </ul><a class="button" href="about.html#/qa">了解更多</a>
+                    <li><i data-i18n="card2_important">重要</i> <b data-i18n="card2_important_val">事情</b>
+                    <li><i data-i18n="card2_daily">日常</i> <b data-i18n="card2_daily_val">吐槽</b>
+                    <li><i data-i18n="card2_feelings">情感</i> <b data-i18n="card2_feelings_val">事故</b></li>
+                </ul><a class="button" href="about.html#/qa" data-i18n="learn_more">了解更多</a>
             <li>
                 <div class="head">
-                    <h4 id="price-3"><big>和我一起玩游戏</big> <small>与你同在</small></h4>
+                    <h4 id="price-3" data-i18n="card3_title"><big>和我一起玩游戏</big> <small>与你同在</small></h4>
                 </div>
                 <ul>
-                    <li><i>QQ群</i> <b>Kook</b>
-                    <li><i>YY</i> <b>微信</b>
-                    <li><i>Tailchat</i> <b>等等....</b></li>
-                </ul><a class="button" href="about.html#/tos">了解更多</a>
+                    <li><i data-i18n="card3_qqgroup">QQ群</i> <b>Kook</b>
+                    <li><i>YY</i> <b data-i18n="card3_wechat">微信</b>
+                    <li><i>Tailchat</i> <b data-i18n="card3_etc">等等....</b></li>
+                </ul><a class="button" href="about.html#/tos" data-i18n="learn_more">了解更多</a>
             <li>
                 <div class="head">
-                    <h4 id="price-4"><big>希望你能快乐</big> <small>每一天</small></h4>
+                    <h4 id="price-4" data-i18n="card4_title"><big>希望你能快乐</big> <small>每一天</small></h4>
                 </div>
                 <ul>
                     <li><i></i> <b></b>
                     <li><i></i> <b></b>
                     <li><i></i> <b></b></li>
-                </ul><a class="button" href="about.html#/api">了解更多</a>
+                </ul><a class="button" href="about.html#/api" data-i18n="learn_more">了解更多</a>
             </li>
         </ul>
         <div class="note layout" id="price-note">
-            <p>注意：所有舆论只代表我个人看法</p>
+            <p data-i18n="price_note">注意：所有舆论只代表我个人看法</p>
         </div>
     </article>
     <article class="step-4">
         <div id="step4">
             <div class="content"><i></i>
-                <h3 class="ui-h ui-h-3">我叫阿成AChengLinux</h3>
-                <div class="note layout">
-                    <p>一个00后
-                    <p>这是我在打工阶段做的网站</p>
-                </div><a class="button" href="about.html#/about" target="_blank">关于
-                    <small>我</small></a>
-                <div class="note layout">
-                    <p class="op5">无无聊聊的我</p>
+                <div class="profile-group">
+                  <div class="shell-box"><i class="shell-shadow"></i> <i class="shell"><span></span></i></div>
+                      <h3 class="ui-h ui-h-3" data-i18n="step4_title">我叫AChengLinus</h3>
+                        <p data-i18n="step4_p1">一个00后
+                        <p data-i18n="step4_p2">这是我在打工阶段做的网站</p>
                 </div>
+                <div class="note layout">
+                    <p class="op5" data-i18n="step4_boring">无无聊聊的我</p>
+                </div><a class="button" href="about.html#/about" target="_blank" data-i18n="step4_about_btn">关于
+                    <small>我</small></a>
             </div><i class="shell-2"></i>
         </div>
     </article>
     <footer class="step-5">
         <div class="htko">
-            <p>一切的开端，梦的延续</p>
+            <p>‌Stay hungry, Stay foolish</p>
         </div>
         <div class="layout">
-            <div class="l"> <a href="index.htm">BY AChengLinux 粤ICP备2025416424号</a>
+            <div class="l"> <a href="index.htm">BY AChengLinus 粤ICP备2025416424号</a>
             </div>
-            <div class="r"><a href="about.html#/about" target="_blank">阿成个人介绍</a></div>
+            <div class="r"><a href="about.html#/about" target="_blank" data-i18n="footer_intro">个人介绍</a></div>
         </div>
     </footer>
 </div>
+<script>
+// ===== 中英文翻译系统 =====
+var Lang = {
+  zh: {
+    nav_server: '我的服务器',
+    nav_announce: '公告',
+    search_ph: '输入关键词...',
+    scroll: '向下滚动',
+    find_me: '在这些地方找到我',
+    nothing_here: '看什么看，没东西啦',
+    card1_title: '<big>关于我</big> <small>我的来历</small>',
+    card1_game: '游戏',
+    card1_game_val: '各种类型游戏',
+    card1_coffee: '咖啡',
+    card1_coffee_val: '巴拿马产地',
+    card1_basketball: '篮球',
+    card1_basketball_val: '蔡徐坤？？？',
+    card2_title: '<big>公告</big> <small>一些声明</small>',
+    card2_important: '重要',
+    card2_important_val: '事情',
+    card2_daily: '日常',
+    card2_daily_val: '吐槽',
+    card2_feelings: '情感',
+    card2_feelings_val: '事故',
+    card3_title: '<big>和我一起玩游戏</big> <small>与你同在</small>',
+    card3_qqgroup: 'QQ群',
+    card3_wechat: '微信',
+    card3_etc: '等等....',
+    card4_title: '<big>希望你能快乐</big> <small>每一天</small>',
+    learn_more: '了解更多',
+    price_note: '注意：所有舆论只代表我个人看法',
+    step4_title: '我叫AChengLinus',
+    step4_p1: '一个00后',
+    step4_p2: '这是我在打工阶段做的网站',
+    step4_boring: '无无聊聊的我',
+    step4_about_btn: '关于<small>我</small>',
+    footer_intro: '个人介绍',
+    page_title: 'AChengLinus - 个人博客',
+    lang_btn: 'EN'
+  },
+  en: {
+    nav_server: 'My Server',
+    nav_announce: 'BBS',
+    search_ph: 'Enter keywords...',
+    scroll: 'Scroll Down',
+    find_me: 'Find me here',
+    nothing_here: 'What are you looking at?<br>Nothing here!',
+    card1_title: '<big>About Me</big> <small>My Story</small>',
+    card1_game: 'Gaming',
+    card1_game_val: 'All kinds of games',
+    card1_coffee: 'Coffee',
+    card1_coffee_val: 'Panama origin',
+    card1_basketball: 'Basketball',
+    card1_basketball_val: 'KUN',
+    card2_title: '<big>BBS</big> <small>Statements</small>',
+    card2_important: 'Important',
+    card2_important_val: 'Stuff',
+    card2_daily: 'Daily',
+    card2_daily_val: 'Rants',
+    card2_feelings: 'Feelings',
+    card2_feelings_val: 'Stories',
+    card3_title: '<big>Play Games With Me</big> <small>Together</small>',
+    card3_qqgroup: 'QQ Group',
+    card3_wechat: 'WeChat',
+    card3_etc: 'etc....',
+    card4_title: '<big>Hope You\'re Happy</big> <small>Every Day</small>',
+    learn_more: 'Learn More',
+    price_note: 'Note: All opinions are my own',
+    step4_title: 'I\'m AChengLinus',
+    step4_p1: 'Born in the 2000s',
+    step4_p2: 'A site I built while working',
+    step4_boring: 'Just boring me',
+    step4_about_btn: 'About<small> Me</small>',
+    footer_intro: 'Personal Intro',
+    page_title: 'AChengLinus - Personal Blog',
+    lang_btn: '中文'
+  }
+};
+
+var currentLang = localStorage.getItem('lang') || 'zh';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  var dict = Lang[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) {
+      if (dict[key].indexOf('<') !== -1) {
+        el.innerHTML = dict[key];
+      } else {
+        el.textContent = dict[key];
+      }
+    }
+  });
+  // 处理 placeholder
+  var searchInput = document.querySelector('.search-baidu input');
+  if (searchInput && dict.search_ph) {
+    searchInput.placeholder = dict.search_ph;
+  }
+  // 更新切换按钮文字
+  var toggle = document.getElementById('langToggle');
+  if (toggle) toggle.textContent = dict.lang_btn;
+  // 更新 html lang 属性
+  document.documentElement.lang = lang;
+  // 切换标题图片（中文/英文版）
+  var line1 = document.querySelector('.line-1');
+  var line2 = document.querySelector('.line-2');
+  if (line1) {
+    line1.style.backgroundImage = 'url(static/img/line-' + (lang === 'en' ? '1-en' : '1') + '.png)';
+  }
+  if (line2) {
+    line2.style.backgroundImage = 'url(static/img/line-' + (lang === 'en' ? '2-en' : '2') + '.png)';
+  }
+}
+
+function toggleLang() {
+  applyLang(currentLang === 'zh' ? 'en' : 'zh');
+}
+
+// 初始化
+applyLang(currentLang);
+</script>
 <script src="static/js/c.js?20181010"></script>
 <script>
 (function(){

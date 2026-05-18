@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html app="help">
 <meta charset="utf-8">
-<title>文档 - AChengLinux - 可能是最萌的</title>
+<title data-i18n="page_title">文档 - AChengLinux - 可能是最萌的</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=1280">
 <link rel="stylesheet" href="static/css/i-1.css">
@@ -46,18 +46,19 @@ border-top: 1px solid #eee;
 		</a>
 		<nav>
 			<!-- <a href="#/">资费</a> -->
-			<a href="index.htm">返回</a>
-			<a href="https://www.ug.link/acheng9616" class="login-link">我的服务器</a>
-			<a href="https://wiki.acheng9616.com/" class="login-link">我的Wiki</a>
+			<a href="index.htm" data-i18n="about_back">返回</a>
+			<a href="https://www.ug.link/acheng9616" class="login-link" data-i18n="nav_server">我的服务器</a>
+			<a href="https://wiki.acheng9616.com/" class="login-link" data-i18n="about_wiki">我的Wiki</a>
+			<a href="javascript:;" class="lang-btn" id="langToggle2" onclick="toggleLang()">EN</a>
 		</nav>
 	</div>
 </header>
-<h1 id="标题"></h1>
+<h1 id="标题" data-i18n="about_title"></h1>
 <nav class="nav-box">
-	<a href="#/about">关于我</a>
-	<a href="#/qa">公告</a>
-	<a href="#/tos">希望与你一起游玩</a>
-	<a href="#/tos">希望你能快乐每一天</a>
+	<a href="#/about" data-i18n="about_me">关于我</a>
+	<a href="#/qa" data-i18n="nav_announce">公告</a>
+	<a href="#/tos" data-i18n="about_play">希望与你一起游玩</a>
+	<a href="#/tos" data-i18n="about_happy">希望你能快乐每一天</a>
 </nav>
 <div class="main-box">
 	<div id="M" class="md-content layout"></div>
@@ -65,7 +66,7 @@ border-top: 1px solid #eee;
 
 <footer>
 	<div class="htko">
-		<p>一切的开端，梦的延续</p>
+		<p data-i18n="about_footer">一切的开端，梦的延续</p>
 	</div>
 
 	<div class="layout">
@@ -77,57 +78,145 @@ border-top: 1px solid #eee;
 	</div>
 </footer>
 
+<script>
+// ===== 中英文翻译系统 =====
+var Lang = {
+  zh: {
+    nav_server: '我的服务器',
+    nav_announce: '公告',
+    about_back: '返回',
+    about_wiki: '我的Wiki',
+    about_title: '文档 - AChengLinux',
+    about_me: '关于我',
+    about_play: '希望与你一起游玩',
+    about_happy: '希望你能快乐每一天',
+    about_footer: '一切的开端，梦的延续',
+    page_title: '文档 - AChengLinux - 可能是最萌的',
+    lang_btn: 'EN'
+  },
+  en: {
+    nav_server: 'My Server',
+    nav_announce: 'BBS',
+    about_back: 'Back',
+    about_wiki: 'My Wiki',
+    about_title: 'Docs - AChengLinux',
+    about_me: 'About Me',
+    about_play: 'Hope to play with you',
+    about_happy: "Hope you're happy every day",
+    about_footer: 'The beginning of everything, the continuation of dreams',
+    page_title: 'Docs - AChengLinux',
+    lang_btn: '中文'
+  }
+};
+
+var currentLang = localStorage.getItem('lang') || 'zh';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  var dict = Lang[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) {
+      el.textContent = dict[key];
+    }
+  });
+  var toggle = document.getElementById('langToggle2') || document.getElementById('langToggle');
+  if (toggle) toggle.textContent = dict.lang_btn;
+  document.documentElement.lang = lang;
+}
+
+function toggleLang() {
+  applyLang(currentLang === 'zh' ? 'en' : 'zh');
+  if (typeof reloadRoute === 'function') reloadRoute();
+}
+
+applyLang(currentLang);
+</script>
 <script src="static/js/itorr2.js"></script>
 <script src="static/js/q.js"></script>
 <script src="static/js/pagedown.converter.js"></script>
 <script>
-var 
-C=new Markdown.Converter();
+// ===== 文章内容翻译 =====
+var routeContent = {
+  zh: {
+    qa_intro: '<big>AChengLinux|Blog 于2024年3月8号正式创立</big>',
+    loading: '文档加载中。',
+    tos: '<p><big>与我一起游玩</big><p>1.我的世界Minecraft服务器生存，bb小镇QQ群：686199998</p>2.雾锁玩国,雾锁王国官方QQ④群957132178</p>',
+    about: '<p><big>阿成（AChengLinux）</big><p>01年出生的普普通通的人，在社会受气，受打击的地方苟且存活，这是他在期间创造个人围脖，本站由AChengLinux独立运营</p>技术成员没有，从业工作时间超过 1年，具有贫穷的研发和运维经验。<br></p>'
+  },
+  en: {
+    qa_intro: '<big>AChengLinux|Blog was founded on March 8, 2024</big>',
+    loading: 'Loading document...',
+    tos: '<p><big>Play With Me</big><p>1. Minecraft survival server, bb town QQ group: 686199998</p>2. Enshrouded, official QQ Group ④: 957132178</p>',
+    about: '<p><big>Acheng (AChengLinux)</big><p>An ordinary person born in 2001, surviving where society pushes and challenges. This blog was created during that journey, independently operated by AChengLinux.</p>No technical team, over 1 year of work experience, with humble development and operations expertise.<br></p>'
+  }
+};
 
-Q.reg('pop',function(view){
-	if(!view){
-		return;
-	}
+var currentView = 'qa';
 
-	var 
-	nav=document.querySelector('.nav-box a[href*="'+view+'"]');
+function getLang() { return localStorage.getItem('lang') || 'zh'; }
 
-	if(!nav){
-		return;
-	}
+function reloadRoute() {
+  var rc = routeContent[getLang()];
+  var activeNav = document.querySelector('.nav-box a.active');
+  if (activeNav) 标题.innerHTML = activeNav.innerHTML;
+  switch (currentView) {
+    case 'qa':
+      M.innerHTML = rc.qa_intro;
+      _.x('static/md/qa.md?6', function(r){
+        M.innerHTML = rc.qa_intro + C.makeHtml(r);
+      });
+      break;
+    case '??':
+      M.innerHTML = '<p class="text-banner">' + rc.loading + '</p>';
+      _.x('static/md/api.md?7', function(r){
+        M.innerHTML = r;
+      });
+      break;
+    case 'tc':
+      M.innerHTML = '<p class="text-banner">' + rc.loading + '</p>';
+      _.x('static/md/tc.md?5', function(r){
+        M.innerHTML = C.makeHtml(r);
+      });
+      break;
+    case 'tos':
+      M.innerHTML = rc.tos;
+      break;
+    case 'about':
+      M.innerHTML = rc.about;
+      break;
+  }
+}
 
-	var 
-	lastNav=document.querySelector('.nav-box a.active');
+var C = new Markdown.Converter();
 
-	if(lastNav){
-		lastNav.classList.remove('active');
-	}
-
-	nav.classList.add('active');
-
-	标题.innerHTML=nav.innerHTML;
-
-}).reg('qa',function(){
-	M.innerHTML='<big>AChengLinux|Blog 于2024年3月8号正式创立</big>';
-	_.x('static/md/qa.md?6',function(r){
-		M.innerHTML=C.makeHtml(r);
-	});
-}).reg('??',function(){
-	M.innerHTML='<p class="text-banner">文档加载中。</p>';
-	_.x('static/md/api.md?7',function(r){
-		M.innerHTML=r;
-	});
-}).reg('tc',function(){
-	M.innerHTML='<p class="text-banner">文档加载中。</p>';
-	_.x('static/md/tc.md?5',function(r){
-		M.innerHTML=C.makeHtml(r);
-	});
-}).reg('tos',function(){
-	M.innerHTML='<p><big>与我一起游玩</big><p>1.我的世界Minecraft服务器生存，bb小镇QQ群：686199998</p>2.雾锁玩国,雾锁王国官方QQ④群957132178</p>';
-}).reg('about',function(){
-	M.innerHTML='<p><big>阿成（AChengLinux）</big><p>01年出生的普普通通的人，在社会受气，受打击的地方苟且存活，这是他在期间创造个人围脖，本站由AChengLinux独立运营</p>\
-	技术成员没有，从业工作时间超过 1年，具有贫穷的研发和运维经验。<br>\</p>';
+Q.reg('pop', function(view) {
+  if (!view) return;
+  currentView = view;
+  var nav = document.querySelector('.nav-box a[href*="' + view + '"]');
+  if (!nav) return;
+  var lastNav = document.querySelector('.nav-box a.active');
+  if (lastNav) lastNav.classList.remove('active');
+  nav.classList.add('active');
+  标题.innerHTML = nav.innerHTML;
+  reloadRoute();
+}).reg('qa', function(){
+  currentView = 'qa';
+  reloadRoute();
+}).reg('??', function(){
+  currentView = '??';
+  reloadRoute();
+}).reg('tc', function(){
+  currentView = 'tc';
+  reloadRoute();
+}).reg('tos', function(){
+  currentView = 'tos';
+  reloadRoute();
+}).reg('about', function(){
+  currentView = 'about';
+  reloadRoute();
 }).init({
-	index:'qa'
+  index: 'qa'
 });
 </script></html>
