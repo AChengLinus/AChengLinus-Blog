@@ -1174,3 +1174,159 @@ html[app=help] .md-content h2 {
     padding-top: 2em;
     margin: 0
 }
+
+/* ===== 浮动跟随头部栏 ===== */
+.float-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  background: transparent;
+  box-shadow: none;
+  height: 64px;
+  line-height: 64px;
+  transform: translateY(-100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+}
+.float-header.visible {
+  transform: translateY(0);
+}
+.float-header .layout {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding-left: 300px;
+}
+/* 左侧 Shell 小图标 */
+.float-header-shell {
+  width: 0;
+  overflow: visible;
+  position: relative;
+  flex-shrink: 0;
+}
+.float-header-shell .shell-icon {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  width: 40px;
+  height: 60px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.float-header-shell .shell-icon span {
+  display: block;
+  width: 40px;
+  height: 60px;
+  background: url(../img/shell.png) 50% 50% no-repeat;
+  background-size: contain;
+}
+.float-header-shell.fly-in .shell-icon {
+  transform: translateY(-50%) scale(1);
+}
+/* 标题 */
+.float-header .float-title {
+  flex-shrink: 0;
+  font-size: 1.3em;
+  color: #FFF;
+  margin: 0 20px 0 50px;
+  line-height: 64px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+/* 搜索框 */
+.float-header .float-search {
+  flex: 1;
+  min-width: 200px;
+  max-width: 500px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+}
+.float-header .float-search form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.float-header .float-search input {
+  flex: 1;
+  padding: 6px 12px;
+  font-size: 0.85em;
+  border: 1px solid #ddd;
+  border-right: none;
+  border-radius: 20px 0 0 20px;
+  outline: none;
+  color: #333;
+  background: #fff;
+  height: 34px;
+  box-sizing: border-box;
+}
+.float-header .float-search input:focus {
+  border-color: #999;
+}
+.float-header .float-search button {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-radius: 0 20px 20px 0;
+  background: #fff;
+  cursor: pointer;
+  height: 34px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+.float-header .float-search button:hover {
+  background: #f5f5f5;
+}
+/* 导航 */
+.float-header nav {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 10px;
+}
+.float-header nav a {
+  display: inline-block;
+  color: #FFF;
+  padding: 0 0.7em;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  line-height: 64px;
+  font-size: 0.95em;
+  white-space: nowrap;
+}
+.float-header nav a.login-link {
+  margin-left: 0.5em;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.85);
+  border-radius: 0.3em;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  line-height: 36px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.float-header nav a.login-link:hover {
+  background: #FFF;
+  color: #2f7ddb;
+}
+.float-header nav a.lang-btn {
+  padding: 0 0.7em;
+  margin-left: 0.5em;
+  font-size: 0.85em;
+  font-weight: 700;
+  background: rgba(255,255,255,0.15);
+  border-radius: 0.3em;
+  line-height: 36px;
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
+.float-header nav a.lang-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+/* Hero shell 淡出过渡 */
+.step-1 .shell-box {
+  transition: opacity 0.4s ease;
+}

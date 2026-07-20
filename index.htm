@@ -175,6 +175,26 @@ header nav a {
             </div>
         </div>
     </article>
+    <!-- 浮动跟随头部栏 -->
+    <div class="float-header" id="floatHeader">
+      <div class="layout">
+        <div class="float-header-shell">
+          <i class="shell-icon"><span></span></i>
+        </div>
+
+<div class="search-baidu float-search">
+          <form action="https://www.baidu.com/s" method="get" target="_blank">
+            <input type="text" name="wd" placeholder="输入关键词..." data-i18n="search_ph" required autocomplete="off">
+            <button type="submit"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#666" stroke-width="2.5" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><line x1="15" y1="15" x2="21" y2="21"/></svg></button>
+          </form>
+        </div>
+        <nav>
+          <a href="https://www.ug.link/acheng9616" class="login-link" data-i18n="nav_server">我的服务器</a>
+          <a href="about.html" data-i18n="nav_announce">公告</a>
+          <a href="javascript:;" class="lang-btn" id="langToggle2" onclick="toggleLang()">EN</a>
+        </nav>
+      </div>
+    </div>
     <span class="tip tip-1" data-i18n="scroll">向下滚动</span>
     <article class="step-2">
         <div class="content">
@@ -390,6 +410,18 @@ function applyLang(lang) {
   if (toggle) toggle.textContent = dict.lang_btn;
   // 更新 html lang 属性
   document.documentElement.lang = lang;
+  // 同步浮动头部栏
+  var floatH = document.getElementById('floatHeader');
+  if (floatH) {
+    floatH.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var k = el.getAttribute('data-i18n');
+      if (dict[k] !== undefined) el.textContent = dict[k];
+    });
+    var floatInput = floatH.querySelector('input');
+    if (floatInput && dict.search_ph) floatInput.placeholder = dict.search_ph;
+    var floatToggle = floatH.querySelector('.lang-btn');
+    if (floatToggle) floatToggle.textContent = dict.lang_btn;
+  }
   // 切换标题图片（中文/英文版）
   var line1 = document.querySelector('.line-1');
   var line2 = document.querySelector('.line-2');
@@ -407,6 +439,43 @@ function toggleLang() {
 
 // 初始化
 applyLang(currentLang);
+
+// ===== 浮动头部栏: 滚动跟随 + Shell 动画 =====
+(function(){
+  var floatHeader = document.getElementById('floatHeader');
+  var heroShell = document.querySelector('.step-1 .shell-box');
+  var floatShell = floatHeader.querySelector('.float-header-shell');
+  var threshold = 150;
+  var ticking = false;
+  var visible = false;
+
+  function update() {
+    var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    var shouldShow = scrollTop > threshold;
+    if (shouldShow !== visible) {
+      visible = shouldShow;
+      if (shouldShow) {
+        floatHeader.classList.add('visible');
+        floatShell.classList.add('fly-in');
+        if (heroShell) heroShell.style.opacity = '0';
+      } else {
+        floatHeader.classList.remove('visible');
+        floatShell.classList.remove('fly-in');
+        if (heroShell) heroShell.style.opacity = '';
+      }
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  update();
+})();
 </script>
 <script src="static/js/c.js?20181010"></script>
 <script>
@@ -462,6 +531,56 @@ applyLang(currentLang);
   input.addEventListener('blur', function(){ setTimeout(hide, 200); });
   window.addEventListener('scroll', function(){ if (suggestBox.style.display !== 'none') position(); });
   window.addEventListener('resize', function(){ if (suggestBox.style.display !== 'none') position(); });
+})();
+
+// ===== 浮动头部栏搜索建议 =====
+(function(){
+  var floatInput = document.querySelector('.float-header .float-search input');
+  if (!floatInput) return;
+  var suggestBox = document.querySelector('.suggestions');
+  var timer;
+
+  function position(){
+    var rect = floatInput.getBoundingClientRect();
+    suggestBox.style.left = rect.left + 'px';
+    suggestBox.style.top = (rect.bottom + 4) + 'px';
+    suggestBox.style.width = rect.width + 'px';
+  }
+
+  floatInput.addEventListener('input', function(){
+    var val = floatInput.value.trim();
+    clearTimeout(timer);
+    if (!val) { suggestBox.style.display = 'none'; return; }
+    timer = setTimeout(function(){
+      position();
+      var script = document.createElement('script');
+      script.src = 'https://suggestion.baidu.com/su?wd=' + encodeURIComponent(val) + '&cb=handleBaiduSuggest2';
+      window.handleBaiduSuggest2 = function(data){
+        suggestBox.innerHTML = '';
+        if (data.s && data.s.length) {
+          data.s.forEach(function(item){
+            var div = document.createElement('div');
+            div.textContent = item;
+            div.addEventListener('click', function(){
+              floatInput.value = item;
+              suggestBox.style.display = 'none';
+              floatInput.form.submit();
+            });
+            suggestBox.appendChild(div);
+          });
+          suggestBox.style.display = 'block';
+          position();
+        } else {
+          suggestBox.style.display = 'none';
+        }
+        document.head.removeChild(script);
+      };
+      document.head.appendChild(script);
+    }, 150);
+  });
+
+  floatInput.addEventListener('focus', function(){ if (suggestBox.children.length) { position(); suggestBox.style.display = 'block'; } });
+  floatInput.addEventListener('blur', function(){ setTimeout(function(){ suggestBox.style.display = 'none'; }, 200); });
 })();
 </script>
 <div style="display:none">
